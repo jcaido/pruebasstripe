@@ -14,6 +14,6 @@ public class PaymentIntentDTO {
         USD, EUR;
     }
     private String description;
-    private int amount;
+    private Long amount;
     private Currency currency;
 }
