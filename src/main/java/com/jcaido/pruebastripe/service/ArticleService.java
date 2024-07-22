@@ -20,4 +20,7 @@ public class ArticleService {
         return articleRepository.findById(id_article).orElseThrow();
     }
 
+    public Boolean existId(Long id_article) {
+        return articleRepository.existsById(id_article);
+    }
 }
