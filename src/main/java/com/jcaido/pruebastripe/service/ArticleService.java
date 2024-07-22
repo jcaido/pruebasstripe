@@ -16,4 +16,8 @@ public class ArticleService {
         return articleRepository.findAll();
     }
 
+    public Article getArticleById(Long id_article) {
+        return articleRepository.findById(id_article).orElseThrow();
+    }
+
 }
