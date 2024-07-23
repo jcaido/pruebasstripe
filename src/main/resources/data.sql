@@ -1,0 +1,2 @@
+INSERT INTO articles(name, description, precio, imageURL) VALUES('Learn Microservices with Spring Boot', 'A practical approach to Rest Ful Services using RabbitMQ, Eureka, etc', 2079, 'https://m.media-amazon.com/images/I/61Lge0qwgjL._SY425_.jpg');
+INSERT INTO articles(name, description, precio, imageURL) VALUES('JavaScript', 'The definitive guide', 3678, 'https://m.media-amazon.com/images/I/51FvNxGoOPL._SX342_SY445_.jpg');
