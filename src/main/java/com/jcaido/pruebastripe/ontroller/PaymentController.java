@@ -24,4 +24,12 @@ public class PaymentController {
 
         return new ResponseEntity<String>(paymentStr, HttpStatus.OK);
     }
+
+    @PostMapping("/confirm/{id}")
+    public ResponseEntity<String> confirm(@PathVariable String id) throws StripeException {
+        PaymentIntent paymentIntent = paymentService.confirm(id);
+        String paymentStr = paymentIntent.toJson();
+
+        return new ResponseEntity<String>(paymentStr, HttpStatus.OK);
+    }
 }
