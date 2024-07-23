@@ -4,6 +4,7 @@ import com.jcaido.pruebastripe.payload.PaymentIntentDTO;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
+import com.stripe.param.PaymentIntentConfirmParams;
 import com.stripe.param.PaymentIntentCreateParams;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -28,5 +29,17 @@ public class PaymentService {
                 .build();
 
         return PaymentIntent.create(params);
+    }
+
+    public PaymentIntent confirm(String id) throws StripeException {
+        Stripe.apiKey = secretKey;
+
+        PaymentIntent resource = PaymentIntent.retrieve(id);
+
+        PaymentIntentConfirmParams params = PaymentIntentConfirmParams.builder()
+                .setPaymentMethod("pm_card_visa")
+                .build();
+
+        return resource.confirm(params);
     }
 }
