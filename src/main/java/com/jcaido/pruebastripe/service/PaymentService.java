@@ -4,6 +4,7 @@ import com.jcaido.pruebastripe.payload.PaymentIntentDTO;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
+import com.stripe.param.PaymentIntentCancelParams;
 import com.stripe.param.PaymentIntentConfirmParams;
 import com.stripe.param.PaymentIntentCreateParams;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,5 +42,14 @@ public class PaymentService {
                 .build();
 
         return resource.confirm(params);
+    }
+
+    public PaymentIntent cancel(String id) throws StripeException {
+        Stripe.apiKey = secretKey;
+
+        PaymentIntent resource = PaymentIntent.retrieve(id);
+        PaymentIntentCancelParams params = PaymentIntentCancelParams.builder().build();
+
+        return resource.cancel(params);
     }
 }
