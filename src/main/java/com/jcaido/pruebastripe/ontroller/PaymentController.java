@@ -33,6 +33,7 @@ public class PaymentController {
         return new ResponseEntity<String>(paymentStr, HttpStatus.OK);
     }
 
+    @PostMapping("/cancel/{id}")
     public ResponseEntity<String> cancel(@PathVariable String id) throws StripeException {
         PaymentIntent paymentIntent = paymentService.cancel(id);
         String paymentStr = paymentIntent.toJson();
