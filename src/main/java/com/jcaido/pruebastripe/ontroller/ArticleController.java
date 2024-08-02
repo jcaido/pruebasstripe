@@ -19,7 +19,7 @@ public class ArticleController {
 
     @GetMapping("/articles")
     public ResponseEntity<List<Article>> getAllArticles() {
-        return new ResponseEntity<>(articleService.getAll(), HttpStatus.OK);
+        return new ResponseEntity<List<Article>>(articleService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/article/{id_article}")
@@ -27,7 +27,7 @@ public class ArticleController {
         if (!articleService.existId(id_article))
             return new ResponseEntity(new Message("it doesn't exist"), HttpStatus.NOT_FOUND);
 
-        return new ResponseEntity<>(articleService.getArticleById(id_article), HttpStatus.OK);
+        return new ResponseEntity<Article>(articleService.getArticleById(id_article), HttpStatus.OK);
     }
 }
 
