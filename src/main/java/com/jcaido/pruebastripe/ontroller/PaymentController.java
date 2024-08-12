@@ -48,11 +48,12 @@ public class PaymentController {
         return new ResponseEntity<String>(paymentStr, HttpStatus.OK);
     }
 
-    @GetMapping("/receipt/{id}")
-    public ResponseEntity<InputStreamResource> getReceiptPdf(@PathVariable String id) throws StripeException, DocumentException, IOException {
+    @GetMapping("/receipt/{id}/{userName}/{titleProduct}")
+    public ResponseEntity<InputStreamResource> getReceiptPdf(
+            @PathVariable String id, @PathVariable String userName, @PathVariable String titleProduct) throws StripeException, DocumentException, IOException {
         try {
             PaymentIntent paymentIntent = PaymentIntent.retrieve(id);
-            ByteArrayInputStream documentPdf = paymentService.generateReceiptPdf(paymentIntent);
+            ByteArrayInputStream documentPdf = paymentService.generateReceiptPdf(paymentIntent, userName, titleProduct);
 
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Disposition", "inline; filename=receipt.pdf");
