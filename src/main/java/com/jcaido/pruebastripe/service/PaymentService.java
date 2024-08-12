@@ -61,6 +61,8 @@ public class PaymentService {
     }
 
     public ByteArrayInputStream generateReceiptPdf(PaymentIntent paymentIntent) throws DocumentException, IOException {
+        Stripe.apiKey = secretKey;
+
         Document document = new Document();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
