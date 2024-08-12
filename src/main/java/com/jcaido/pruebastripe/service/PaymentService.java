@@ -75,7 +75,7 @@ public class PaymentService {
         document.add(title);
 
         document.add(new Paragraph("Payment Intent ID: " + paymentIntent.getId()));
-        document.add(new Paragraph("Amount: " + paymentIntent.getAmount() / 100 + " EUR"));
+        document.add(new Paragraph("Amount: " + paymentIntent.getAmount() / 100.00 + " EUR"));
         document.add(new Paragraph("Currency: " + paymentIntent.getCurrency().toUpperCase()));
         document.add((new Paragraph("Status: " + paymentIntent.getStatus())));
 
