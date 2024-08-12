@@ -60,7 +60,8 @@ public class PaymentService {
         return resource.cancel(params);
     }
 
-    public ByteArrayInputStream generateReceiptPdf(PaymentIntent paymentIntent) throws DocumentException, IOException {
+    public ByteArrayInputStream generateReceiptPdf(
+            PaymentIntent paymentIntent, String userName, String titleProduct) throws DocumentException, IOException {
         Stripe.apiKey = secretKey;
 
         Document document = new Document();
@@ -70,14 +71,14 @@ public class PaymentService {
         document.open();
 
         Font fontTitle = new Font(Font.FontFamily.TIMES_ROMAN, 20, Font.BOLD);
-        Paragraph title = new Paragraph("recibo", fontTitle);
+        Paragraph title = new Paragraph("Recibo de compra", fontTitle);
         title.setAlignment(Element.ALIGN_CENTER);
         document.add(title);
 
-        document.add(new Paragraph("Payment Intent ID: " + paymentIntent.getId()));
-        document.add(new Paragraph("Amount: " + paymentIntent.getAmount() / 100.00 + " EUR"));
-        document.add(new Paragraph("Currency: " + paymentIntent.getCurrency().toUpperCase()));
-        document.add((new Paragraph("Status: " + paymentIntent.getStatus())));
+        document.add(new Paragraph("Usuario: " + userName));
+        document.add(new Paragraph("Producto: " + titleProduct));
+        document.add(new Paragraph("Total importe: " + paymentIntent.getAmount() / 100.00 + " EUR"));
+        document.add(new Paragraph("Identificador del pago: " + paymentIntent.getId()));
 
         document.close();
 
