@@ -1,13 +1,20 @@
 package com.jcaido.pruebastripe.ontroller;
 
+import com.itextpdf.text.DocumentException;
 import com.jcaido.pruebastripe.payload.PaymentIntentDTO;
 import com.jcaido.pruebastripe.service.PaymentService;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/stripe")
@@ -40,4 +47,24 @@ public class PaymentController {
 
         return new ResponseEntity<String>(paymentStr, HttpStatus.OK);
     }
+
+    @GetMapping("/receipt/{id}")
+    public ResponseEntity<InputStreamResource> getReceiptPdf(@PathVariable String id) throws StripeException, DocumentException, IOException {
+        try {
+            PaymentIntent paymentIntent = PaymentIntent.retrieve(id);
+            ByteArrayInputStream documentPdf = paymentService.generateReceiptPdf(paymentIntent);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Disposition", "inline; filename=receipt.pdf");
+
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .body(new InputStreamResource(documentPdf));
+        } catch (DocumentException | IOException e) {
+            return ResponseEntity.internalServerError().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+     }
 }
