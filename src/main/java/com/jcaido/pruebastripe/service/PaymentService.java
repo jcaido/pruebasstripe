@@ -79,6 +79,7 @@ public class PaymentService {
         document.add(new Paragraph("Producto: " + titleProduct));
         document.add(new Paragraph("Total importe: " + paymentIntent.getAmount() / 100.00 + " EUR"));
         document.add(new Paragraph("Identificador del pago: " + paymentIntent.getId()));
+        document.add(new Paragraph("Identificador del pago: " + paymentIntent.getId()));
 
         document.close();
 
